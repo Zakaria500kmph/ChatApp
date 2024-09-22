@@ -10,5 +10,7 @@ const userSlice=createSlice({
     }
 })
 
+
 export const userAction =userSlice.actions
+
 export {userSlice}
