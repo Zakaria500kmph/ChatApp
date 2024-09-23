@@ -4,9 +4,6 @@ import toast from "react-hot-toast";
 import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-
-
 function Login({setUser}) {
     let [login,setLogin]=useState(true)
     let [signup,setsignup]=useState(false)
@@ -25,14 +22,11 @@ function Login({setUser}) {
                   "Content-Type":"application/json"},
                   withCredentials:true
              }
+            
              const res=await axios.post("/v1/login",options,config)
              if(res.data.statusCode==200){
-                setUser(true)
-                if(res.data.profileSetup){
-                    navigate("/browser")
-                }else{
-                    navigate("/profile")
-                }
+                 console.log(res.data.data.profileSetup)
+                 navigate("/intermediate")
              }
             
            } catch (error) {
@@ -52,6 +46,8 @@ function Login({setUser}) {
            if(response.data.statusCode=="200"){
             setUser(true)
                navigate("/profile")
+               setsignup(false)
+               setLogin(true)
            }
             } catch (error) {
                 toast.error("error")

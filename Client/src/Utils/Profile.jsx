@@ -33,7 +33,8 @@ function hovering(){
   const firstname=useRef()
   const lastname=useRef()
   const image=useRef()
-  const [useImage,setImage]=useState(`${user.image? user.image : "https://th.bing.com/th/id/OIP.0IxGb16dYqy8akb1Ha0qsQHaEK?rs=1&pid=ImgDetMain"} `)
+  console.log(user)
+  const [useImage,setImage]=useState(`${user?.image ? user.image : "https://th.bing.com/th/id/OIP.0IxGb16dYqy8akb1Ha0qsQHaEK?rs=1&pid=ImgDetMain"} `)
  
  async function SubmitHandler(e){
     e.preventDefault()
@@ -42,8 +43,8 @@ function hovering(){
       "lastName":lastname.current.value
     }
     const config={
-      withcredential:true,
-      header:{
+      withCredentials:true,
+      headers:{
         "Content-Type":"application/json"}
     }
     const res=await axios.patch("/v1/SetupProfile",options,config)
@@ -68,8 +69,8 @@ function hovering(){
         
       <form className="flex-col  w-[184px] h-24 ml-[20%] " type="submit" onSubmit={SubmitHandler} >
         <input type="email" placeholder="Enter Your Email id"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" defaultValue={user.email}/>
-        <input type="text" placeholder="Enter First Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={firstname}/>
-        <input type="text" placeholder="Enter Last Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={lastname}/>
+        <input type="text" placeholder="Enter First Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={firstname} value={user.firstName}/>
+        <input type="text" placeholder="Enter Last Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={lastname} value={user.lastName}/>
         <button className="h-10 mt-11 ml-6 rounded-3xl bg-purple-600 min-w-[200px]">Save Changes</button>
         </form>
         </div>

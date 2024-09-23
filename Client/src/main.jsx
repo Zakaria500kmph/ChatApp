@@ -7,10 +7,16 @@ import store from '../store/store.js'
 import Browser from './Utils/Browser.jsx'
 import  Profile  from './Utils/Profile.jsx'
 import { Provider } from 'react-redux'
+import Login from './Utils/login.jsx'
+import Intermediate from './Utils/Intermediate.jsx'
 const router=createBrowserRouter([
   {path:"/",
    element:<App/>,
    children:[
+    {
+    path:"/",
+    element:<Login/>
+    },
    {
     path:"/browser",
     element:<Browser/>
@@ -18,6 +24,10 @@ const router=createBrowserRouter([
    {
     path:"/profile",
     element:<Profile/>
+   },
+   {
+    path:"/intermediate",
+    element:<Intermediate/>
    }
    ]
    
@@ -29,7 +39,6 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
       <Provider store={Store}>
     <RouterProvider router={router}>
-    <App />
     </RouterProvider>
     </Provider>
   </StrictMode>,
