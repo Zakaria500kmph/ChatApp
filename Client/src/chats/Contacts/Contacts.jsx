@@ -4,6 +4,7 @@ import { CiEdit } from "react-icons/ci";
 import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import Dm from "./Dm";
 
 function Contacts() {
   const navigate=useNavigate()
@@ -20,7 +21,10 @@ function Contacts() {
         <img src={logo} alt="LOGO!!" className="w-[150px] h-[150px] absolute top-[-15px] hidden md:block left-[-40px]"/>
         <h1 className="font-medium text-3xl pt-8 relative w-[100%] md:left-[40%]">ChatApp</h1>
         </div>
-        <div className="px-4 pt-10 text-slate-400">Direct me To messages</div>
+        <div className=" flex  pt-10 text-white">
+        <div className="text-slate-400 pl-4">Direct me To messages</div>
+        <Dm/>
+        </div>
         <div className="p-4 text-slate-400">Channels</div>
         <div className="flex md:bg-black rounded-xl absolute bottom-0 w-[23%]">
           <div>
