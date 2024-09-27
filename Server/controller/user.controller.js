@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken"
 import fs from "fs"
 import { uploadToFirebase } from "../utils/uploadTofirebase.js";
 
+
 const generatedRefreshAndAccessToken=async (userId)=>{
     const user=await User.findOne(userId)
     const  accessToken=await user.generateAccessToken()
@@ -96,7 +97,6 @@ const updateDp=asyncHandler(async (req,res)=>{
     const name= "upload/profile"+date+file.originalname
     fs.renameSync(file.path,name)
     const ProfileImage= await uploadToFirebase(name,file.originalname)
-    
     const user=await User.findById(req.info.id)
     user.image=ProfileImage
     user.save({validateBeforeSave:false})
@@ -104,4 +104,17 @@ const updateDp=asyncHandler(async (req,res)=>{
 
 })
 
-export {LoginUser,RegisterUser,userInfo,SetupProfile,updateDp}
+const logout=asyncHandler(async(req,res)=>{
+    const user=req.info
+    const userNew=await User.findByIdAndUpdate(user.id,{
+        $set:{
+            refreshToken:""
+        }
+    },{new:true})
+    const option={
+        "httpOnly":true,
+        "secure":true
+    }
+    res.status(200).clearCookie("refreshToken",option).clearCookie("accessToken",option).json(200)
+})
+export {LoginUser,RegisterUser,userInfo,SetupProfile,updateDp,logout}

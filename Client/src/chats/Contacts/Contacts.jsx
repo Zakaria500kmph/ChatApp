@@ -3,10 +3,16 @@ import {useSelector} from "react-redux"
 import { CiEdit } from "react-icons/ci";
 import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 function Contacts() {
   const navigate=useNavigate()
-  const user=useSelector((store)=>store.userInfo.user)
+  const user=useSelector((store)=>store?.userInfo?.user)
+ async function LogoutHandle(){
+  const res=await axios.get("/v1/logout")
+  if(res.status=200)
+    navigate("/")
+ }
   return (
 <div className="md:w-[30%] bg-slate-800 text-white h-[100%] border-solid 
         border-[1px] border-gray-500">
@@ -18,12 +24,12 @@ function Contacts() {
         <div className="p-4 text-slate-400">Channels</div>
         <div className="flex md:bg-black rounded-xl absolute bottom-0 w-[23%]">
           <div>
-            <img src={`${user.image}`} alt="logo" className="w-[60px] h-[60px] md:w-[140px] md:h-[80px] rounded-[100%] mr-3" />
+            <img src={`${user?.image}`} alt="logo" className="w-[60px] h-[60px] md:w-[140px] md:h-[80px] rounded-[100%] mr-3" />
           </div>
-          <div className="h-10 md:pl-9 md:w-full w-10">{user.firstName && user.lastName?`${user.firstName}-${user.lastName}`:""}
+          <div className="h-10 md:pl-9 md:w-full w-10">{user?.firstName && user?.lastName?`${user?.firstName}-${user?.lastName}`:""}
             <div className="flex">
             <CiEdit className="size-8 invisible md:visible hover:text-slate-400" onClick={()=>{navigate("/profile")}}/>
-            <FiLogOut className="size-7 invisible md:visible ml-9 hover:text-slate-400"/>
+            <FiLogOut className="size-7 invisible md:visible ml-9 hover:text-slate-400" onClick={LogoutHandle}/>
             </div>
 
           </div>

@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../index.css'
 import toast from "react-hot-toast";
 import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {useSelector} from "react-redux"
 function Login({setUser}) {
     let [login,setLogin]=useState(true)
     let [signup,setsignup]=useState(false)
@@ -11,7 +12,12 @@ function Login({setUser}) {
     let password=useRef()
     let email=useRef()
     const navigate=useNavigate()
-
+    const info=useSelector((store)=>store?.userInfo?.user)
+useEffect(()=>{
+    if(info){
+        navigate("/intermediate")
+    }
+})
    async function onSubmitHandler(e){
         e.preventDefault()
         if(login){

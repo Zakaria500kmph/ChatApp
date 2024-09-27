@@ -1,42 +1,55 @@
-import { useState,useRef } from "react";
+import { useState,useRef, useEffect } from "react";
 import { IoArrowBackSharp } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
 import {useDispatch, useSelector} from "react-redux"
 import toast from "react-hot-toast";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import {userAction} from "../../store/slices"
 function Profile() {
   const [hoverd,sethovered]=useState(false)
+  const dispatch=useDispatch()
+  const user= useSelector(store=>store.userInfo.user)
+  useEffect(()=>{
+    if(!user){
+      navigate("/")
+    }
+  },[])
+ const [d,setd]=useState(false)
 function hovering(){
     sethovered(true)
   }
   function nothovering(){
     sethovered(false)
   }
+  const [useImage,setImage]=useState(`${user?.image ? user?.image : "https://th.bing.com/th/id/OIP.0IxGb16dYqy8akb1Ha0qsQHaEK?rs=1&pid=ImgDetMain"} `)
+  const [dp,setdp]=useState(false)
 
-  async function ImageHandler(event){
-    const file=event?.target.files[0]
- if(file){
-  const formdata=new FormData()
-  formdata.append("profileImage",file)
-  const config={
-    withcredential:true
-     }
- const response=await axios.post("/v1/updateDp",formdata,config)
-     console.log(response)
-    }
-    
+async function ImageHandler(event){
+  const file=event?.target.files[0]
+if(file){
+const formdata=new FormData()
+formdata.append("profileImage",file)
+const config={
+  withcredential:true
+   }
+const response=await axios.post("/v1/updateDp",formdata,config)
+   if(response.data.statusCode==200){
+    let newuser={...user, image:response.data.data.image}
+    dispatch(userAction.setUser(newuser))
+    setd(true)
+   }
   }
+  
+}
 
-  const user=useSelector(store=>store.userInfo.user)
+
   const navigate=useNavigate()
   const firstname=useRef()
   const lastname=useRef()
   const image=useRef()
-  console.log(user)
-  const [useImage,setImage]=useState(`${user?.image ? user.image : "https://th.bing.com/th/id/OIP.0IxGb16dYqy8akb1Ha0qsQHaEK?rs=1&pid=ImgDetMain"} `)
- 
- async function SubmitHandler(e){
+
+  async function SubmitHandler(e){
     e.preventDefault()
     const options={
       "firstName":firstname.current.value,
@@ -48,12 +61,19 @@ function hovering(){
         "Content-Type":"application/json"}
     }
     const res=await axios.patch("/v1/SetupProfile",options,config)
-    console.log(res.data.statusCode==200)
     if(res.data.statusCode==200){
       toast.success(res.data.message)
       navigate("/browser")
     }
   }
+  
+
+  
+  
+  
+ 
+ 
+
 
     return (<>
       <div className=" bg-slate-800 w-[100%] h-[100vh] flex">
@@ -68,9 +88,9 @@ function hovering(){
         />
         
       <form className="flex-col  w-[184px] h-24 ml-[20%] " type="submit" onSubmit={SubmitHandler} >
-        <input type="email" placeholder="Enter Your Email id"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" defaultValue={user.email}/>
-        <input type="text" placeholder="Enter First Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={firstname} value={user.firstName}/>
-        <input type="text" placeholder="Enter Last Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={lastname} value={user.lastName}/>
+        <input type="email" placeholder="Enter Your Email id"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" value={user?.email}/>
+        <input type="text" placeholder="Enter First Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={firstname} value={user?.firstName}/>
+        <input type="text" placeholder="Enter Last Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={lastname} value={user?.lastName}/>
         <button className="h-10 mt-11 ml-6 rounded-3xl bg-purple-600 min-w-[200px]">Save Changes</button>
         </form>
         </div>

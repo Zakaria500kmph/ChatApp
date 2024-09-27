@@ -1,7 +1,7 @@
 import admin from "firebase-admin"
 import uuid from "uuidv4"
 import fs from "fs"
-import serviceAccount from "./helper.js"
+import {serviceAccount} from "./helper.js"
 import {Name} from "./helper.js"
 
     admin.initializeApp({

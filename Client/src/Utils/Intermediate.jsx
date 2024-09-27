@@ -27,9 +27,12 @@ function Intermediate() {
 const data=useSelector(store=>store.userInfo?.user)
 if(data?.profileSetup){
   navigate("/browser")
-}else{
-  console.log(data)
+}
+if(data?.profileSetup==false){
   navigate("/profile")
+}
+if(!data){
+  navigate("/")
 }
   return <>
   </>

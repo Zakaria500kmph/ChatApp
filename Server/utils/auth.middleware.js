@@ -5,6 +5,7 @@ import { apiError } from "./errorHandler.js";
 const auth =asyncHandler(async (req,res,next)=>{
 const refreshToken=req.cookies.refreshToken
 const info =jwt.verify(refreshToken,process.env.AccessTokenSecret)
+
 if(!info){
     throw new apiError("You are not authenticated",400)
 }
