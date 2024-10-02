@@ -1,16 +1,29 @@
 import { useState } from "react"
 import Lottie from "react-lottie"
 import { animationDefaultOptions } from "../../Utils/ProfileHandler"
+import axios from "axios"
 function Dm() {
     const [set,setSet]=useState(false)
     const [searchContacts,setSearchContacts]=useState("")
     function HandleContacts(){
         setSet(true)
       }
-      function Search(e){
+      async function Search(e){
+        e.preventDefault()
+        if(e.key=="Enter" || e.key==undefined){
+          const options={searchContacts}
+          const config={
+            headers:{
+              "Content-Type":"application/json"
+            },
+            withCredentials:true
+          }
+          const response=await axios.post("/contacts/Search",options,config)
+          console.log(response)
+        }else{
+          setSearchContacts(searchContacts.concat(e.key))
+        }
         
-        setSearchContacts(e.target.value)
-        console.log(searchContacts)
     }
   return (<>
     <div className="pl-14 text-3xl mt-[-7px] cursor-pointer relative group">
@@ -22,7 +35,10 @@ function Dm() {
 {set && <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
   <div className="bg-slate-800 p-8 rounded-lg shadow-lg min-w-[300px]">
     <h2 className="text-2xl mb-4 text-white text-center">Add contacts</h2>
-    <input className="mb-4 text-white block bg-slate-600 p-2 rounded-2xl min-w-[400px]" value={searchContacts} placeholder="Enter Contacts" onChange={Search}></input>
+    <div className="flex">
+    <input className="mb-4 text-white block bg-slate-600 p-2 rounded-2xl min-w-[400px]" value={searchContacts} placeholder="Enter Contacts" onKeyDown={Search} onSubmit={Search}></input>
+    <button className="mb-5 ml-6 hover:bg-purple-600 min-w-[80px] rounded-2xl" onClick={Search}>Search</button>
+    </div>
     {searchContacts.length===0 && <div>
       
       <div className="bg-slate-800 w-full 
