@@ -80,7 +80,7 @@ const SetupProfile=asyncHandler(async(req,res)=>{
         throw new apiError("Please Enter all fields are compulsory")
     }
     const user=await User.findById(req.info.id)
-    if(!user){throw new apiError("Internal server Error",500)}
+    if(!user){throw new apiError("Internal server Error !!",500)}
     user.firstName=firstName
     user.lastName=lastName
     user.profileSetup=true

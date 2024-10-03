@@ -11,7 +11,6 @@ function Intermediate() {
   let User=""
   const dispatch=useDispatch()
   const navigate=useNavigate()
- const [Userget,setUser]=useState(false)
  useEffect(()=>{
   const getUser=async ()=>{
     try {
@@ -37,5 +36,4 @@ if(!data){
   return <>
   </>
 }
-
 export default Intermediate

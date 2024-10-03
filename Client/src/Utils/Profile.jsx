@@ -61,12 +61,14 @@ const response=await axios.post("/v1/updateDp",formdata,config)
         "Content-Type":"application/json"}
     }
     const res=await axios.patch("/v1/SetupProfile",options,config)
-    if(res.data.statusCode==200){
+    if(res.data.statusCode===200){
       toast.success(res.data.message)
       navigate("/browser")
     }
   }
-  
+  function Navigation(){
+    navigate("/browser")
+  }
 
   
   
@@ -78,7 +80,7 @@ const response=await axios.post("/v1/updateDp",formdata,config)
     return (<>
       <div className=" bg-slate-800 w-[100%] h-[100vh] flex">
         <div className="p-4">
-        <IoArrowBackSharp className="text-white w-[40px] h-10 "/>
+        <IoArrowBackSharp className="text-white w-[40px] h-10 hover:cursor-pointer" onClick={Navigation}/>
         </div>
         <div className=" ml-[10%] mt-[175px] flex">
         <input type="file" ref={image} onChange={ImageHandler} className="absolute size-[200px] mt-[60px] opacity-0"  />

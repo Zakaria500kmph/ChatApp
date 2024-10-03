@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {useSelector} from "react-redux"
-function Login({setUser}) {
+function Login() {
     let [login,setLogin]=useState(true)
     let [signup,setsignup]=useState(false)
     let username=useRef()
@@ -49,11 +49,11 @@ useEffect(()=>{
 
 
             const response= await axios.post("/v1/reg",options,config)
-           if(response.data.statusCode=="200"){
-            setUser(true)
-               navigate("/profile")
-               setsignup(false)
-               setLogin(true)
+            console.log(response.data.statusCode===200)
+           if(response.status===200){
+            setsignup(false)
+            setLogin(true)
+            navigate("/profile")
            }
             } catch (error) {
                 toast.error("error")
