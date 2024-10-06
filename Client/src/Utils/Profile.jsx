@@ -62,6 +62,7 @@ const response=await axios.post("/v1/updateDp",formdata,config)
     }
     const res=await axios.patch("/v1/SetupProfile",options,config)
     if(res.data.statusCode===200){
+      dispatch(userAction.setUser(res.data.data))
       toast.success(res.data.message)
       navigate("/browser")
     }
@@ -70,7 +71,9 @@ const response=await axios.post("/v1/updateDp",formdata,config)
     navigate("/browser")
   }
 
-  
+  function ProfileComplete(){
+
+  }
   
   
  
@@ -90,9 +93,9 @@ const response=await axios.post("/v1/updateDp",formdata,config)
         />
         
       <form className="flex-col  w-[184px] h-24 ml-[20%] " type="submit" onSubmit={SubmitHandler} >
-        <input type="email" placeholder="Enter Your Email id"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" value={user?.email}/>
-        <input type="text" placeholder="Enter First Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={firstname} value={user?.firstName}/>
-        <input type="text" placeholder="Enter Last Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={lastname} value={user?.lastName}/>
+        <input type="email" placeholder="Enter Your Email id"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" value={user?.email} onChange={ProfileComplete}/>
+        <input type="text" placeholder="Enter First Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={firstname} value={user?.firstName} onChange={ProfileComplete}/>
+        <input type="text" placeholder="Enter Last Name"   className="h-10 mb-4 min-w-[250px] pl-7 rounded-xl bg-slate-500" ref={lastname} value={user?.lastName} onChange={ProfileComplete}/>
         <button className="h-10 mt-11 ml-6 rounded-3xl bg-purple-600 min-w-[200px]">Save Changes</button>
         </form>
         </div>

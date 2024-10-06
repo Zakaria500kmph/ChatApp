@@ -2,10 +2,9 @@ import express, { urlencoded } from "express";
 import "dotenv/config"
 import router from "./routes/user.router.js";
 import cookieParser from "cookie-parser";
-import cors from "cors"
-import asyncHandler from "./utils/asyncHandler.js";
-import {Name} from "./utils/helper.js"
+import cors from "cors";
 import Contacts_router from "./routes/contacts.router.js";
+import SocketIo from "./socket.js";
 
 let app=express()
 app.use(cookieParser()) // cookieParser() not cookieParser
@@ -21,9 +20,10 @@ app.use(express.static("./public"))
 
 app.use("/api/v1",router)
 app.use("/api/v1/contacts",Contacts_router)
-app.listen(process.env.PORT,()=>{
+const server=app.listen(process.env.PORT,()=>{
     console.log("this port is running",process.env.PORT)
 })
 
+SocketIo(server)
 
 export default app

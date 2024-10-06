@@ -19,7 +19,7 @@ function Intermediate() {
       console.log(error)
     }
     dispatch(userAction.setUser(User.data))
-
+    
   }
   getUser()
 },[])
@@ -33,6 +33,7 @@ if(data?.profileSetup==false){
 if(!data){
   navigate("/")
 }
+
   return <>
   </>
 }

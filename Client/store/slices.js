@@ -9,8 +9,23 @@ const userSlice=createSlice({
         }
     }
 })
-
+const contactSlice=createSlice({
+    name:"Contacts",
+    initialState:{contacts:undefined,contactsType:undefined,setup:false},
+    reducers:{
+        setContacts:(state,action)=>{
+            state.contacts=action.payload
+        },
+        setContactsType:(state,action)=>{
+            state.contactsType=true
+        },
+        Setup(state,action){
+            state.setup=!state.setup
+        }
+    }
+})
 
 export const userAction =userSlice.actions
+const contactsAction=contactSlice.actions
 
-export {userSlice}
+export {userSlice,contactsAction,contactSlice}
