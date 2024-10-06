@@ -1,11 +1,11 @@
-# ChatApp
+# ChatApp  💬
 
-**Author**: Zakaria Siddiqui
+**Author**: Zakaria Siddiqui 🎖️🎖️🎖️
 
-Welcome to ChatApp, a simple and intuitive real-time messaging application. Built with the latest technologies, ChatApp aims to provide a seamless and enjoyable chat experience for users.💬
+Welcome to ChatApp, a simple and intuitive real-time messaging application. Built with the latest technologies, ChatApp aims to provide a seamless and enjoyable chat experience for users.
 
 
-## Features
+## Features  🖋️
 - **Real-time Messaging**: Send and receive messages instantly with WebSockets.
 - **User Authentication**: Secure user login and registration.
 - **Media Sharing**: Share images, videos, and files.
@@ -19,7 +19,7 @@ Welcome to ChatApp, a simple and intuitive real-time messaging application. Buil
 
 ## Getting Started
 
-### Prerequisites
+### Prerequisites 🍉
 - Node.js and npm installed
 - MongoDB instance running
 
