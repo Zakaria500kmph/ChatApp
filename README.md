@@ -3,7 +3,8 @@
 **Author**: Zakaria Siddiqui
 
 Welcome to ChatApp, a simple and intuitive real-time messaging application. Built with the latest technologies, ChatApp aims to provide a seamless and enjoyable chat experience for users.
-![Chatapp](https://i.pinimg.com/originals/90/94/7d/90947d33b4aceb637b9c0cb9ff4f3e30.gif)
+<img src="https://link-to-your-animation.gif" alt="ChatApp Animation" width="200" height="100">
+
 ## Features
 - **Real-time Messaging**: Send and receive messages instantly with WebSockets.
 - **User Authentication**: Secure user login and registration.
