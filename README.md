@@ -2,8 +2,8 @@
 
 **Author**: Zakaria Siddiqui
 
-Welcome to ChatApp, a simple and intuitive real-time messaging application. Built with the latest technologies, ChatApp aims to provide a seamless and enjoyable chat experience for users.
-<img src="https://link-to-your-animation.gif" alt="ChatApp Animation" width="200" height="100">
+Welcome to ChatApp, a simple and intuitive real-time messaging application. Built with the latest technologies, ChatApp aims to provide a seamless and enjoyable chat experience for users.💬
+
 
 ## Features
 - **Real-time Messaging**: Send and receive messages instantly with WebSockets.
