@@ -3,13 +3,17 @@ import Lottie from "react-lottie"
 import { animationDefaultOptions } from "../../Utils/ProfileHandler"
 import axios from "axios"
 import DetailCard from "./DetailCard"
+import { useDispatch } from "react-redux"
+import { contactsAction} from "../../../store/slices"
 
 function Dm() {
      const [set,Setset]=useState(false)
     const [searchContacts,setSearchContacts]=useState("")
     let [contactDet,setContactDet]=useState([])
+    const dispatch=useDispatch()
     function HandleContacts(){
       Setset(true)  
+      dispatch(contactsAction.setChatType("Chat"))
             }
       async function Search(e){
         e.preventDefault()
@@ -24,8 +28,7 @@ function Dm() {
           }
            const response=await axios.post("/contacts/Search",options,config)
          if(response.data){
-          setContactDet(response.data)
-            
+          setContactDet(response.data)            
          }
         }
         else if(RegExp.test(e.key)){

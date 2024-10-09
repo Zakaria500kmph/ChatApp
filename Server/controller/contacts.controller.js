@@ -43,7 +43,7 @@ const Search=asyncHandler(async(req,res)=>{
     if(!user){
         throw apiError("No user Found",404)
     }
-    console.log(user)
+   
     res.status(200).json(user)
     
     

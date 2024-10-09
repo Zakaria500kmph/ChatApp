@@ -11,7 +11,7 @@ const userSlice=createSlice({
 })
 const contactSlice=createSlice({
     name:"Contacts",
-    initialState:{contacts:undefined,contactsType:undefined,setup:false},
+    initialState:{contacts:undefined,contactsType:undefined,setup:false,chatType:undefined},
     reducers:{
         setContacts:(state,action)=>{
             state.contacts=action.payload
@@ -21,7 +21,11 @@ const contactSlice=createSlice({
         },
         Setup(state,action){
             state.setup=!state.setup
+        },
+        setChatType(state,action){
+            state.chatType=action.payload
         }
+
     }
 })
 

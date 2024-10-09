@@ -23,7 +23,6 @@ app.use("/api/v1/contacts",Contacts_router)
 const server=app.listen(process.env.PORT,()=>{
     console.log("this port is running",process.env.PORT)
 })
-
 SocketIo(server)
 
 export default app
