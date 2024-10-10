@@ -20,9 +20,10 @@ function SocketIo(server){
         }
     }
     const sendMessage=async (message)=>{
+        console.log(message)
         const senderSocketId=socketsMap.get(message.sender)
-        const recieverSocketId=socketsMap.get(message.reciever)
-        const createdMessage=await Message.create({message})
+        const recieverSocketId=socketsMap.get(message.receiver)
+        const createdMessage=await Message.create(message)
         const populatedMessage=await Message.findById(createdMessage._id).populate("sender","email,firstName,lastName,image,_id").populate("receiver","email,firstName,lastName,image,_id")
 
         if(senderSocketId){ io.to(senderSocketId).emit("recieveMessage",populatedMessage) }

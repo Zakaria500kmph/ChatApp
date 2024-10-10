@@ -1,16 +1,29 @@
 import { IoSend } from "react-icons/io5";
 import { RiEmojiStickerLine } from "react-icons/ri";
 import { GrAttachment } from "react-icons/gr";
-import { useRef,useState } from "react";
+import {  useRef,useState } from "react";
 import EmojiPicker from 'emoji-picker-react'
+import { useSocket } from "../context/contextSocket";
+import { useSelector } from "react-redux";
 function SendUtils() {
+  const socket=useSocket()
+  const {chatType,contacts,selectedChatMessages}=useSelector((store)=>store.contactsInfo)
+  const {user}=useSelector((store)=>store.userInfo)
   let[emojiPickerOpen,setemojiPickerOpen]=useState(false)
   let [Message,setMessage]=useState("")
 function handleEmoji(emoji){
   setMessage((Message)=>Message+emoji.emoji)
-}
+  }
   function HandleSend(){
-     console.log(Message.current.value)
+     if(chatType==="Chat"){
+       socket.emit("sendMessage",{
+         sender:user._id,
+         receiver:contacts._id,
+         messagesType:"text",
+         content:Message,
+         fileUrls:undefined
+        })
+     }
   }
   
   return (
@@ -30,7 +43,7 @@ autoFocusSearch={false}/>
 </div>
 
       <button>
-      <GrAttachment className="size-[35px] pl-2 text-slate-500 hover:text-white"/>
+      <GrAttachment className="size-[35px] pl-2 text-slate-500 hover:text-white" onClick={()=>setemojiPickerOpen(true)}/>
       </button>
       
       <button>
