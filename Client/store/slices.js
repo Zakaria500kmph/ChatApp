@@ -29,7 +29,17 @@ const contactSlice=createSlice({
             const previousMessages=state.selectedChatMessages
             state.selectedChatMessages=[...previousMessages,{ message:action.payload.content, receiver:`${state.chatType!=="text" ? action.payload.receiver._id:action.payload.receiver }` ,sender :`${state.chatType!=="text" ? action.payload.sender._id:action.payload.sender }` }]
             
-        }
+        },
+        setSelectedChatMessagesArray(state, action) {
+            const newMessages = action.payload.map(item => ({
+              message: item.content,
+              receiver: item.receiver,
+              sender: item.sender
+            }));
+            state.selectedChatMessages = newMessages
+          }
+          
+          
 
     }
 })

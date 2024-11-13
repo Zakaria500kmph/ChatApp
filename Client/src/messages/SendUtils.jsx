@@ -23,6 +23,7 @@ function handleEmoji(emoji){
          content:Message,
          fileUrls:undefined
         })
+        setMessage("")
      }
   }
   

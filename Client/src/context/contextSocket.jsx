@@ -12,11 +12,13 @@ export const SocketProvider=({children})=>{
     const id=userInfo?.user?._id
     const socket=useRef()
     const contactsInfo=useSelector((store)=>store.contactsInfo)
-    const contactsInfoRef = useRef(contactsInfo);
+    // const contactsInfoRef = useRef(contactsInfo);
+    const contactsInfoRef = useRef();
     useEffect(()=>{
       contactsInfoRef.current = contactsInfo;
     },[contactsInfo])
     useEffect(()=>{
+      //  here connection is establish with a parameter id
           socket.current=io("http://localhost:8080/",{
             withCredentials:true,
             query:{userId:id}

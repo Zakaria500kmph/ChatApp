@@ -1,13 +1,25 @@
 import EmojiPicker from 'emoji-picker-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
 import moment from "moment"
+import FetchMessage from '../helper/fetchMessage';
+import { contactsAction } from '../../store/slices';
  
 function Messagebody() {
+  const dispatch=useDispatch()
   const scrollRef=useRef();
   const {chatType,contacts,selectedChatMessages}=useSelector((store)=>store.contactsInfo)
   const user=useSelector((store)=>store.userInfo.user)
-
+useEffect(()=>{
+  const getMessages = async () => {
+    const response = await FetchMessage(contacts._id);
+    const payload=response.data.messages
+    if(response.status=200){
+        dispatch(contactsAction.setSelectedChatMessagesArray(payload));
+    }
+  }
+  getMessages()
+},[])
   const renderDmMessages=(message)=>{
     
         return <div className='flex pr-4'>
@@ -20,7 +32,6 @@ function Messagebody() {
   useEffect(()=>{
     if(scrollRef.current){
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
-
     }
   },[selectedChatMessages]);
   const renderMessages=()=>{

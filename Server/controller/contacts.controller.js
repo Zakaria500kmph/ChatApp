@@ -2,7 +2,8 @@ import asyncHandler from "../utils/asyncHandler.js"
 import {User} from "../models/user.model.js"
 import {apiError} from "../utils/errorHandler.js"
 import {responseHandler} from "../utils/responseHandler.js"
-
+import { Message } from "../models/message.model.js" 
+import mongoose from "mongoose"
 const Search=asyncHandler(async(req,res)=>{
     const {searchContacts}=req.body
     const seaechable=searchContacts.replace(/[.*+?${}()|[\]\\]/g, "\\$&") 
@@ -48,4 +49,58 @@ const Search=asyncHandler(async(req,res)=>{
     
     
 })
-export {Search}
+const GetMessages=asyncHandler(async (req,res)=>{
+   const User=req.info.id
+   const {contact}=req.body
+   if(!contact){
+       throw new apiError("Please Provide the contact details",404)
+    }
+    const messages=await Message.find({
+        $or:[
+            {$and:[{sender:User},{receiver:contact}]},
+            {$and:[{sender:contact},{receiver:User}]}
+        ]
+    }).sort({timestamps:"asc"})
+    
+    res.send({messages})
+});
+const GetAllContacts=asyncHandler(async(req,res)=>{
+    const userId= new mongoose.Types.ObjectId(req.info.id)
+    const userInfo=await Message.aggregate([
+        {
+            $match:{
+                $or:[{"sender":userId},{"receiver":userId}]
+            }
+            
+        },
+        {$sort:{timestamps:-1}},
+        {$group:{
+            _id:{$cond:{
+                if:{$eq:["$receiver",userId]},
+                then :"$sender",
+                else:"$receiver"
+            }},
+            LastMessage:{$first:"$timestamps"}
+        }},
+    {$lookup:{
+        from:"users",
+        localField:"_id",
+        foreignField:"_id",
+        as:"ContactInfo"
+    }},
+    {$unwind:"$ContactInfo"},
+    {
+        $project: {
+            "LastMessage": 1,
+            "_id": 1,
+            "email": "$ContactInfo.email",
+            "lastName": "$ContactInfo.lastName",
+            "firstName": "$ContactInfo.firstName",
+            "username": "$ContactInfo.username",
+            "image": "$ContactInfo.image"
+        }
+    },{$sort:{timestamps:-1}}
+    ])
+    res.send(userInfo)
+})
+export { Search, GetMessages,GetAllContacts }
