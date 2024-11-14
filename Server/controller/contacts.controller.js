@@ -99,7 +99,7 @@ const GetAllContacts=asyncHandler(async(req,res)=>{
             "username": "$ContactInfo.username",
             "image": "$ContactInfo.image"
         }
-    },{$sort:{timestamps:-1}}
+    },{$sort:{timestamps:-1 }}
     ])
     res.send(userInfo)
 })
