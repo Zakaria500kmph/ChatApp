@@ -19,7 +19,7 @@ const contactSlice=createSlice({
         setContactsType:(state,action)=>{
             state.contactsType=true
         },
-        Setup(state,action){
+        Setup(state){
             state.setup=!state.setup
         },
         setChatType(state,action){

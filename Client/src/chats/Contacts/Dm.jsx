@@ -70,7 +70,7 @@ function Dm() {
         </div>
     </div>
       </div>}
-      { (contactDet.length>0 && searchContacts.length!=0) &&<DetailCard profile={contactDet} Set={Setset}/>}
+      { (contactDet.length>0 && searchContacts.length!=0) &&<DetailCard profile={contactDet} Set={Setset} onClick={()=>console.log("item clicked with id as")}/>}
     <button className="bg-slate-800 text-white px-4 py-2 rounded hover:bg-red-600 mt-12" onClick={()=>Setset(!set)}>Close</button>
   </div>
 </div>

@@ -8,7 +8,7 @@ export default defineConfig({
     proxy:{
       "/v1":"http://localhost:8080/api/",
       "/Client":"http://localhost:8080/",
-      "/contacts":"http://localhost:8080/api/v1"
+      "/contacts":"http://localhost:8080/api/v1/"
     }
   }
 })

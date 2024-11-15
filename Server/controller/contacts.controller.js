@@ -73,7 +73,8 @@ const GetAllContacts=asyncHandler(async(req,res)=>{
             }
             
         },
-        {$sort:{timestamps:-1}},
+        {$sort:{
+            "timestamps":-1}},
         {$group:{
             _id:{$cond:{
                 if:{$eq:["$receiver",userId]},
@@ -99,7 +100,7 @@ const GetAllContacts=asyncHandler(async(req,res)=>{
             "username": "$ContactInfo.username",
             "image": "$ContactInfo.image"
         }
-    },{$sort:{timestamps:-1 }}
+    },{$sort:{"LastMessage":-1 }}
     ])
     res.send(userInfo)
 })
