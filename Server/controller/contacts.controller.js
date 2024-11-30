@@ -4,6 +4,10 @@ import {apiError} from "../utils/errorHandler.js"
 import {responseHandler} from "../utils/responseHandler.js"
 import { Message } from "../models/message.model.js" 
 import mongoose from "mongoose"
+import { ApiError } from "@google-cloud/storage"
+import fs from "fs"
+import { fstat } from "fs"
+import { uploadToFirebase } from "../utils/uploadTofirebase.js"
 const Search=asyncHandler(async(req,res)=>{
     const {searchContacts}=req.body
     const seaechable=searchContacts.replace(/[.*+?${}()|[\]\\]/g, "\\$&") 
@@ -104,4 +108,14 @@ const GetAllContacts=asyncHandler(async(req,res)=>{
     ])
     res.send(userInfo)
 })
-export { Search, GetMessages,GetAllContacts }
+const uploadFiles=asyncHandler(async(req,res)=>{
+    if(!req.file){
+        throw new ApiError("Atleat one file required !!!")
+    }
+    const date=Date.now()
+    const fileName= "/upload/files"+req.file.originalname+date
+    fs.renameSync(req.file.path,fileName)
+    const filez=await uploadToFirebase(fileName,req.file.originalname)
+   res.json({"output":"Success file is uploaded to fire base ","url":filez})
+})
+export { Search, GetMessages,GetAllContacts,uploadFiles }
