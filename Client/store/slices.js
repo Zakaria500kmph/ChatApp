@@ -32,9 +32,10 @@ const contactSlice=createSlice({
         },
         setSelectedChatMessagesArray(state, action) {
             const newMessages = action.payload.map(item => ({
-              message: item.content,
+              message: item.content ,
               receiver: item.receiver,
-              sender: item.sender
+              sender: item.sender,
+              file:item.fileUrls
             }));
             state.selectedChatMessages = newMessages
           }

@@ -32,22 +32,33 @@ function handleEmoji(emoji){
     fileRef.current.click()
   }
 function isImage(type){
-  const imageRegex = /\/(jpg|jpeg|png|gif|bmp|webp)$/i;
+  const imageRegex = /\/(jpg|jpeg|png|gif|bmp|webp|)$/i;
   return imageRegex.test(type)
-
 } 
+function isVideo(type){
+  const imageRegex = /\.(mp4|avi|mov|wmv|flv|mkv)$/i;
+  return imageRegex.test(type)
+}
  async function FileUpload(e){
   try{
 
     const file=e.target.files[0]
-    if(isImage(file.type)){
+    if(isImage(file.type)|| isVideo(file.type)){
       const options={
         "withCredentials":true,
       }
       const newFile= new FormData()
       newFile.append("file",file)
      const res=await axios.post("/contacts/File",newFile,options) 
-     console.log(res.data.url)
+     if(chatType==="Chat"){
+      socket.emit("handleFiles",{
+        sender:user._id,
+        receiver:contacts._id,
+        messagesType:"file",
+        content:undefined,
+        fileUrls:res.data.url
+       })
+     }
     }
   }catch{
     console.log("Error occured during file attachment")

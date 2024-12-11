@@ -29,6 +29,15 @@ function SocketIo(server){
         if(recieverSocketId){ io.to(recieverSocketId).emit("recieveMessage",populatedMessage) } // if reciever is connected
 
     }
+    async function handleFiles(file){
+        const senderSocketId=socketsMap.get(file.sender)
+        const recieverSocketId=socketsMap.get(file.receiver)
+        const createdMessage=await Message.create(file)  
+        const populatedMessage=await Message.findById(createdMessage._id).populate("sender","email,firstName,lastName,image,_id").populate("receiver","email,firstName,lastName,image,_id")
+
+        if(senderSocketId){ io.to(senderSocketId).emit("recieveMessage",populatedMessage)} // if sender in connected
+        if(recieverSocketId){ io.to(recieverSocketId).emit("recieveMessage",populatedMessage) } // if reciever is connected
+      }
     
     io.on("connection",(socket)=>{
         const userId=socket.handshake.query.userId
@@ -39,6 +48,7 @@ function SocketIo(server){
             console.log("PLease Provide UserId carefully")
         }
         socket.on("sendMessage",sendMessage)
+        socket.on("handleFiles",handleFiles)
         socket.on("disconnect",()=>disconnectIO(socket))
     })
 }

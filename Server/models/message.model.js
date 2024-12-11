@@ -12,7 +12,7 @@ const messageSchema=mongoose.Schema({
     },
     messagesType:{
         type:String,
-        enum:["files","text"],
+        enum:["file","text"],
         required:true
     },
     content:{
