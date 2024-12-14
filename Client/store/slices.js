@@ -9,6 +9,22 @@ const userSlice=createSlice({
         }
     }
 })
+const uploadSlice = createSlice({
+    name: "uploads",
+    initialState: {
+      isUploading: false,
+      uploadingStatus: 0,
+    },
+    reducers: {
+      isUploadingReducer: (state) => {
+        state.isUploading = !state.isUploading; // Immer allows this toggle
+      },
+      uploadingStatusReducer: (state, action) => {
+        state.uploadingStatus = action.payload; // Assigning new value
+      },
+    },
+  });
+  
 const contactSlice=createSlice({
     name:"Contacts",
     initialState:{contacts:undefined,contactsType:undefined,setup:false,chatType:undefined,selectedChatMessages:[]},
@@ -28,7 +44,6 @@ const contactSlice=createSlice({
         setSelectedChatMessages(state,action){
             const previousMessages=state.selectedChatMessages
             state.selectedChatMessages=[...previousMessages,{ message:action.payload.content, receiver:`${state.chatType!=="text" ? action.payload.receiver._id:action.payload.receiver }` ,sender :`${state.chatType!=="text" ? action.payload.sender._id:action.payload.sender }` }]
-            
         },
         setSelectedChatMessagesArray(state, action) {
             const newMessages = action.payload.map(item => ({
@@ -47,5 +62,6 @@ const contactSlice=createSlice({
 
 export const userAction =userSlice.actions
 const contactsAction=contactSlice.actions
+const uploadsAction=uploadSlice.actions
 
-export {userSlice,contactsAction,contactSlice}
+export {userSlice,contactsAction,contactSlice,uploadsAction,uploadSlice}

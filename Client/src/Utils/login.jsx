@@ -95,11 +95,11 @@ useEffect(()=>{
     </div>
     <div className='text-start pl-[27%]'>
         <form action="submit" onSubmit={onSubmitHandler}>
-        <p className='font-semibold py-2'>Username</p>
+        <p className='font-semibold pt-2'>Username</p>
         <input type="text" placeholder='Enter a Unique Username' ref={username} />
-            <p className={`font-semibold py-2 ${login &&"hidden"}`}>Email</p>
+            <p className={`font-semibold py-2 h-[18px] ${login &&"hidden"}`}>Email</p>
             <input type="email" placeholder='Enter Your Email ' className={`${login &&"hidden"}`} ref={email}/>
-            <p className=' font-semibold py-2'>Password</p>
+            <p className=' font-semibold py-2 h-2'>Password</p>
             <input type="password" placeholder='Enter a unique Password' ref={password} />
             <button className='block my-8 mx-[15%] bg-slate-700 h-10 w-40 rounded-xl text-white'>{signup&&"SignUp "} {login&&"Login"} {!(signup||login)&&"Welcome"}</button>
         </form>

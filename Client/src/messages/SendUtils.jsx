@@ -6,13 +6,20 @@ import EmojiPicker from 'emoji-picker-react'
 import { useSocket } from "../context/contextSocket";
 import { useSelector } from "react-redux";
 import axios from "axios"
+import { useDispatch } from "react-redux";
+import { uploadsAction } from "../../store/slices";
 function SendUtils() {
   const socket=useSocket()
   const {chatType,contacts,selectedChatMessages}=useSelector((store)=>store.contactsInfo)
   const {user}=useSelector((store)=>store.userInfo)
+  const {isUploading,uploadingStatus}=useSelector((store)=>store.uploads)
   const fileRef=useRef()
   let[emojiPickerOpen,setemojiPickerOpen]=useState(false)
+  let dispatch=useDispatch()
   let [Message,setMessage]=useState("")
+  function updateuploadSlice(){
+   
+  }
 function handleEmoji(emoji){
   setMessage((Message)=>Message+emoji.emoji)
   }
@@ -46,9 +53,13 @@ function isVideo(type){
     if(isImage(file.type)|| isVideo(file.type)){
       const options={
         "withCredentials":true,
+        onUploadProgress: (progressEvent) => { const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+          dispatch(uploadsAction.uploadingStatusReducer(progress))
+        }
       }
       const newFile= new FormData()
       newFile.append("file",file)
+      dispatch(uploadsAction.isUploadingReducer())
      const res=await axios.post("/contacts/File",newFile,options) 
      if(chatType==="Chat"){
       socket.emit("handleFiles",{
@@ -58,9 +69,11 @@ function isVideo(type){
         content:undefined,
         fileUrls:res.data.url
        })
-     }
+      }
+      dispatch(uploadsAction.isUploadingReducer())
     }
   }catch{
+    dispatch(uploadsAction.isUploadingReducer())
     console.log("Error occured during file attachment")
   }
   }
